@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <!-- TailwindCSS -->
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md px-6 py-4 mb-6">
+      <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <div class="flex items-center justify-evenly gap-8">
+          <a href="/" class="text-xl font-semibold hover:text-blue-600"
+            >Dashboard</a
+          >
+          <a href="/users" class="text-xl font-semibold hover:text-blue-600"
+            >Users</a
+          >
+        </div>
+        <a
+          href="/add"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+          >Add User</a
+        >
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4"><%- body %></main>
+  </body>
+</html>
