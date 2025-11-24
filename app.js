@@ -27,15 +27,33 @@ app.get("/", (_, res) => {
   });
 });
 
-app.get("/users", (_, res) => {
-  logger.info("Getting data from the database");
-  db.query("SELECT * FROM user_tb", (err, results) => {
-    logger.info("Data:", results);
-    if (err) {
-      logger.error("Error getting data from the database:", err);
-      throw err;
-    }
-    res.render("users", { users: results, title: "All Users" });
+app.get("/users", (req, res) => {
+  const page = parseInt(req.query.page) || 1; // current page
+  const limit = 10; // users per page
+  const offset = (page - 1) * limit;
+
+  // Count total users
+  db.query("SELECT COUNT(*) AS total FROM user_tb", (err, countResult) => {
+    if (err) throw err;
+
+    const totalUsers = countResult[0].total;
+    const totalPages = Math.ceil(totalUsers / limit);
+
+    // Fetch users for the current page
+    db.query(
+      "SELECT * FROM user_tb ORDER BY id DESC LIMIT ? OFFSET ?",
+      [limit, offset],
+      (err, users) => {
+        if (err) throw err;
+
+        res.render("users", {
+          title: "User Management",
+          users,
+          currentPage: page,
+          totalPages,
+        });
+      }
+    );
   });
 });
 
